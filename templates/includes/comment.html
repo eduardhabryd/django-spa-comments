@@ -1,0 +1,8 @@
+{% for comment in comments %}
+    {{ comment.user_name }} - {{ comment.created_at }}
+    <p>{{ comment.text }}</p>
+    <a href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
+    {% if comment.replies.all.exists %}
+        {% include "includes/comment.html" with comments=comment.replies.all %}
+    {% endif %}
+{% endfor %}
