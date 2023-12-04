@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1 class="heading-text">Comments
+        <a href="{% url "add_comment" %}"
+           class="btn btn-primary ms-3"
+        >Add</a>
+    </h1>
+    <hr>
+    {% for comment in comments %}
+        {{ comment.user_name }} - {{ comment.created_at }}
+        <p>{{ comment.text }}</p>
+        <a href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
+        {% if comment.replies.all.exists %}
+            {% include "includes/comment.html" with comments=comment.replies.all %}
+        {% endif %}
+        <hr>
+    {% endfor %}
+{% endblock %}
