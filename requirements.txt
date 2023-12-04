@@ -1,1 +1,4 @@
-django==5.0
+django==4.2.8
+django-simple-captcha==0.5.20
+django-extensions==3.2.3
+ipython==8.18.1
