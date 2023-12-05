@@ -1,8 +1,13 @@
 {% for comment in comments %}
-    {{ comment.user_name }} - {{ comment.created_at }}
-    <p>{{ comment.text }}</p>
-    <a href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
-    {% if comment.replies.all.exists %}
-        {% include "includes/comment.html" with comments=comment.replies.all %}
-    {% endif %}
+    <div class="mt-3" style="margin-left: {{ depth }}em;">
+        <div class="" style="background-color: whitesmoke">
+            <h5 style="display: inline">{{ comment.user_name }}</h5>
+            <p style="display: inline; margin-left: 20px">{{ comment.created_at }}</p>
+        </div>
+        <p>{{ comment.text }}</p>
+        <a class="btn btn-primary btn-sm" href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
+        {% if comment.replies.all.exists %}
+            {% include "includes/comment.html" with comments=comment.replies.all depth=depth|add:"1" %}
+        {% endif %}
+    </div>
 {% endfor %}
