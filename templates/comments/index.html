@@ -9,11 +9,14 @@
     </h1>
     <hr>
     {% for comment in comments %}
-        {{ comment.user_name }} - {{ comment.created_at }}
+        <div class="" style="background-color: whitesmoke">
+            <h5 style="display: inline">{{ comment.user_name }}</h5>
+            <p style="display: inline; margin-left: 20px">{{ comment.created_at }}</p>
+        </div>
         <p>{{ comment.text }}</p>
-        <a href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'add_comment_reply' parent_comment_id=comment.id %}">Reply</a>
         {% if comment.replies.all.exists %}
-            {% include "includes/comment.html" with comments=comment.replies.all %}
+            {% include "includes/comment.html" with comments=comment.replies.all depth=1 %}
         {% endif %}
         <hr>
     {% endfor %}
