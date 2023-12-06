@@ -1,1 +1,7 @@
-django==5.0
+django==4.2.8
+django-simple-captcha==0.5.20
+django-extensions==3.2.3
+ipython==8.18.1
+python-dotenv==1.0.0
+flake8==6.0.0
+black==23.3.0
