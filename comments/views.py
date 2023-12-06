@@ -14,7 +14,6 @@ class CommentListView(ListView):
     def get_queryset(self):
         queryset = Comment.objects.filter(parent_comment__isnull=True)
 
-        # Sorting by created_at in descending order by default
         sort_param = self.request.GET.get('sort', 'created_at')
         order_param = self.request.GET.get('order', 'desc')
 
@@ -53,10 +52,8 @@ class CommentReplyCreateView(CreateView):
         parent_comment_id = self.kwargs.get('parent_comment_id')
         parent_comment = get_object_or_404(Comment, pk=parent_comment_id)
 
-        # Save the form to ensure the comment has an ID before adding the many-to-many relationship
         response = super().form_valid(form)
 
-        # Add the parent_comment to the many-to-many relationship
         self.object.parent_comment.add(parent_comment)
 
         return response
