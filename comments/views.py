@@ -12,11 +12,28 @@ class CommentListView(ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        return (
-            Comment.objects
-            .filter(parent_comment__isnull=True)
-            .order_by('-created_at')
-        )
+        queryset = Comment.objects.filter(parent_comment__isnull=True)
+
+        # Sorting by created_at in descending order by default
+        sort_param = self.request.GET.get('sort', 'created_at')
+        order_param = self.request.GET.get('order', 'desc')
+
+        order_by_field = sort_param if order_param == 'asc' else f"-{sort_param}"
+
+        if sort_param == 'user_name':
+            queryset = queryset.order_by(order_by_field, 'user_name')
+        elif sort_param == 'email':
+            queryset = queryset.order_by(order_by_field, 'email')
+        elif sort_param == 'created_at':
+            queryset = queryset.order_by(order_by_field)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sort_param'] = self.request.GET.get('sort', 'created_at')
+        context['order_param'] = 'asc' if self.request.GET.get('order', 'desc') == 'desc' else 'desc'
+        return context
 
 
 class CommentCreateView(CreateView):
