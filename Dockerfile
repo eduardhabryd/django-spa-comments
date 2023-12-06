@@ -1,8 +1,8 @@
 FROM python:3.11.4-slim
 
-LABEL maintainer = "eduardhabryd@gmail.com"
+LABEL maintainer="eduardhabryd@gmail.com"
 
-ENV PYTHONBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
@@ -12,14 +12,8 @@ RUN apt-get update && apt-get -y install libpq-dev gcc
 RUN pip install psycopg2
 
 RUN pip install -r requirements.txt
-RUN python manage.py migrate
-RUN python manage.py loaddata fixture.json
 
-RUN adduser \
-         --disabled-password \
-         --no-create-home\
-         django-user
-
+RUN adduser --disabled-password --no-create-home django-user
 USER django-user
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py loaddata fixture.json && python manage.py runserver 0.0.0.0:8000"]
