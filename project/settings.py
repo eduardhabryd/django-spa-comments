@@ -12,7 +12,9 @@ SECRET_KEY = os.getenv("SECRET_KEY", "default")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "spa-comments-39tm.onrender.com",
+]
 
 
 INSTALLED_APPS = [
