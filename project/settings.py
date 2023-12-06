@@ -1,9 +1,13 @@
+import os
+from dotenv import load_dotenv
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
-SECRET_KEY = "django-insecure-4x-ei-6g4_v*kv14_&x$gwf^r7n_en&woh7_1*obib%lvs_%3("
+SECRET_KEY = os.getenv("SECRET_KEY", "default")
 
 DEBUG = True
 
@@ -52,12 +56,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+
+def get_databases():
+    if os.getenv("DB_TYPE") == "postgres":
+        return {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "HOST": os.environ["POSTGRES_HOST"],
+                "NAME": os.environ["POSTGRES_DB"],
+                "USER": os.environ["POSTGRES_USER"],
+                "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+                "PORT": "5432",
+            }
+        }
+    return {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+
+
+DATABASES = get_databases()
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
