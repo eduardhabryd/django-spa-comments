@@ -46,6 +46,17 @@ CORS_ALLOWED_ORIGINS = [
     # Add other allowed origins if needed
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://spa-comments-39tm.onrender.com",
+    # Add other trusted origins if needed
+]
+
+CORS_ORIGIN_WHITELIST = (
+    "https://spa-comments-39tm.onrender.com",
+    # Add other whitelisted origins if needed
+)
+
+
 ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
