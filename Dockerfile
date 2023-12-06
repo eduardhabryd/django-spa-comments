@@ -12,6 +12,8 @@ RUN apt-get update && apt-get -y install libpq-dev gcc
 RUN pip install psycopg2
 
 RUN pip install -r requirements.txt
+RUN python manage.py migrate
+RUN python manage.py loaddata fixture.json
 
 RUN adduser \
          --disabled-password \
