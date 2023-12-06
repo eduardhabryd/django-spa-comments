@@ -50,3 +50,9 @@ To run the project using Docker, follow these steps:
 - Sort by username, date, or email
 
 ### 🪟 Demo
+
+#### Main Page
+![main_page](demo/main_page.png)
+
+#### Comments Page
+![add_comments_page](demo/add_comment_page.png)
