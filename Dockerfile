@@ -14,6 +14,7 @@ RUN pip install psycopg2
 RUN pip install -r requirements.txt
 RUN python manage.py migrate
 RUN python manage.py loaddata fixture.json
+RUN python manage.py runserver 0.0.0.0:8000
 
 RUN adduser \
          --disabled-password \
