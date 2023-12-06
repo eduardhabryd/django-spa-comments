@@ -1,7 +1,8 @@
 import os
-from dotenv import load_dotenv
-
 from pathlib import Path
+
+from dotenv import load_dotenv
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,6 +80,9 @@ def get_databases():
 
 DATABASES = get_databases()
 
+# Uncomment for deploying
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES["default"].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
